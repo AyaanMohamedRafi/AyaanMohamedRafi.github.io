@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
   <!-- Elfsight Calculator | Untitled Calculator -->
-  
   <head>
     <script src="https://elfsightcdn.com/platform.js" async></script>
     <script src="p5.min.js"></script>
