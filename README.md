@@ -1,30 +1,10 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Widgets</title>
-
-    <script src="p5.min.js"></script>
-    <script src="sketch.js"></script>
-    <script src="https://elfsightcdn.com/platform.js" async></script>
-    <div class="elfsight-app-e8fe4aaf-7306-404e-ad69-e2a39102f750" data-elfsight-app-lazy></div>
-</head>
-<body>
-     <style>
-        body { 
-              margin: 0; 
-              padding: 0; 
-              background-color: #800020; 
-        }
-        canvas { 
-          display: block; 
-        } /* Removes scrollbars */
-      </style>
-      <h1>Hello World!</h1>
-      <p>My first GitHub website.</p>
-     
-    
-</body>
-</html>
+# Github school assignment
+## This project requires 2 widgets, a coloured background, 
+- Use of Colour
+- Use of CSS (example columns)
+- Link to another site you did not write
+- Link to another page you wrote
+- At least 2 widgets
+- Use of p5.js (JavaScript )
+-- will require you to call CDN
+- Google Analytics
