@@ -21,8 +21,8 @@ let song;
 let gameEnd = false;
 
 function preload() {
-  song = loadSound("SearchingforaBody.mp3.mp3")
-  foodEaten = loadSound("649726__duskbreaker__8bit-coin-collection-2.wav") 
+  // song = loadSound("SearchingforaBody.mp3.mp3")
+  // foodEaten = loadSound("649726__duskbreaker__8bit-coin-collection-2.wav") 
   
   twopFont = loadFont("PressStart2P-Regular.ttf")
 
@@ -82,11 +82,11 @@ restartButton.style("font-size", "11px");
 }
 
 function start(){
-  userStartAudio(); //backup 
+  // userStartAudio(); //backup 
   loop(); //start draw
-  song.loop();
-  if (!song.isPlaying()){
-  song.loop(); // overlap prevention :) 
+  // song.loop();
+  // if (!song.isPlaying()){
+  // song.loop(); // overlap prevention :) 
 }
 
 }
@@ -132,8 +132,8 @@ function restart(){
   directionIndex = 0;
   gameEnd = false;
    plotFood();
-  song.stop();
-  song.loop();
+  // song.stop();
+  // song.loop();
    loop();
 }
 function caterpillar() {
@@ -141,7 +141,7 @@ function caterpillar() {
   if (cX[0] == foodX && cY[0] == foodY) {
     plotFood();
     len += 1;
-    foodEaten.play();
+    // foodEaten.play();
   }
 
   for (let i = len - 1; i > 0; i--) {
@@ -161,7 +161,7 @@ function crossOver() {
   cY[0] += yDirectionArray[directionIndex] * 10;
 if (cX[0] < 5 || cX[0] > 395 || cY[0] < 5 || cY[0] > 395) {
     gameEnd = true;
-    song.stop();
+    // song.stop();
   //hi score here
     if ((len-1) > highScore){
       highScore = (len- 1);
@@ -173,7 +173,7 @@ if (cX[0] < 5 || cX[0] > 395 || cY[0] < 5 || cY[0] > 395) {
     for (let i = 1; i < len; i++) {
       if (cX[0] == cX[i] && cY[0] == cY[i]) {
         gameEnd = true;
-        song.stop(); 
+        // song.stop(); 
         noLoop();
     }
    }
