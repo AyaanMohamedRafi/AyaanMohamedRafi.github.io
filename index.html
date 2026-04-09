@@ -3,34 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Widgets</title>
+    <title>Widgets & Web Dev</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-</script> 
+<script> 
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments); }
+    gtag('js',new Date());
+    gtag('config','G-XXXXXXXXXX');
 
+</script>
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    <script src="p5.min.js"></script>
-    <script src="sketch.js"></script>
+    <!-- <script src="p5.min.js"></script> -->
+    <script src="sketch.js" defer></script>
+
+    <script src="https://elfsightcdn.com/platform.js" async></script>
     
    
 </head>
 <body>
      <style>
+        
+    @import url('https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap');
+    
         body { 
+            
+ 
+  font-family: "Sen", sans-serif;
+  font-style: normal;
+  font-size: 24px;
+
               margin: 0; 
-              padding: 0; 
-              background-color: #111013;
+              padding: 30px; 
+              background-color: rgb(124, 128, 208);
+              color:#f0f0f0;
+        }
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 20px;
+}
+.column {
+    flex: 1;
+    min-width: 300px;
+    background-color:rgba(0,0,0,0.25);
+    padding:20px;
+    border-radius:12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+a{
+    color: #ffdd57;
+    text-decoration:none;
+    font-weight:bold;
+}
+a:hover{
+    text-decoration: underline;
+}
+ div.slider__InputRow-sc-2a4ddd37-1 > label{
+            font-size: 24px;
+        }
+        div.FormFieldLayout__Hint-sc-86191d35-3.cJlpbG{
+            font-size: 18px;
         }
         canvas { 
           display: block; 
+          margin-top:20px;
+          border: 3px solid white;
         }
       </style>
       <h1>Hello World!</h1>
       <p>My first GitHub website.</p>
-      <div class="elfsight-app-e8fe4aaf-7306-404e-ad69-e2a39102f750" data-elfsight-app-lazy></div>
+      <div style="margin-bottom: 20px;"></div>
+      <p>Check out the <a href="https://p5js.org/reference/" target="_blank">p5.js Reference Guide</a>.</p>
     
+    <div class="container">
+    <div class="column">
+        <h2>widget 1; Elfsight</h2>
+        <div class="elfsight-app-e8fe4aaf-7306-404e-ad69-e2a39102f750"data-elfsight-app-lazy></div>
+    </div>
+    <div class="column">
+        <h2>widget:2 Video Player</h2>
+        <iframe 
+        width="100%" 
+        height="315" 
+        src= "https://www.youtube.com/embed/KpT-P9boKwI" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+    </iframe>
+    </div>
+</div>
 </body>
-    <script src="https://elfsightcdn.com/platform.js" async></script>
+    
 </html>
 
- /* Removes scrollbars */
+
