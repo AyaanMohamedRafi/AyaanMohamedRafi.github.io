@@ -1,211 +1,89 @@
-let xDirectionArray = [1, 0, -1, 0];
-let yDirectionArray = [0, 1, 0, -1];
-let directionIndex = 0;
+var sunDiameter = 65;
+var moonDiameter = 2;
+var baseSpeed = 0.02;
+// assume 0.02 is earth year
+// radius 100 = 1 AU
 
-let twopFont; // font style
-
-let cX = [];
-let cY = [];
-//length
-let len = 1;
-let diameter = 10;
-
-let highScore = 0;
-
-let foodX;
-let foodY;
-
-let foodEaten; 
-let song;
-
-let gameEnd = false;
-
-function preload() {
-  // song = loadSound("SearchingforaBody.mp3.mp3")
-  // foodEaten = loadSound("649726__duskbreaker__8bit-coin-collection-2.wav") 
-  
-  twopFont = loadFont("PressStart2P-Regular.ttf")
-
-}
+var planets = [
+      { name: "Mercury", r: 39, size: 4, speed: baseSpeed / 0.24, angle: 0, colour:'#EAE8EB' },
+      { name: "Venus", r: 72, size: 7, speed: baseSpeed / 0.62, angle: 0, colour:'#D9AF3C' },
+      { name: "Earth", r: 100, size: 7.5, speed: 0.02, angle: 0, colour:'#48A42E' },
+      { name: "Mars", r: 152, size: 5.5, speed: baseSpeed / 1.88, angle: 0, colour:'#C66554' },
+      { name: "Jupiter", r: 320, size: 18.5, speed:baseSpeed / 11.86, angle: 0, colour:'#B17E0A' },
+      { name: "Saturn", r: 390, size: 15, speed: baseSpeed / 29.46 , angle: 0, colour:'#D1BB79' },
+      { name: "Uranus", r: 450, size: 10, speed: baseSpeed / 84.01, angle: 0, colour:'#919EDF' },
+      { name: "Neptune", r: 610, size: 9.5, speed: baseSpeed / 164.08, angle: 0, colour:'#0A16AF' }
+];
+// i dont feel like making moons for all the planets
+var moon = { r: 15, size: 2.5, speed: 0.1, angle: 0 };
 
 function setup() {
-  noLoop();
-  frameRate(10);
-  cX[0] =35;
-  cY[0] =15;
-  createCanvas (400, 500);
-  textFont(twopFont);
-// buttons use HTML to use 2P font.
-plotFood();
-let startButton = createButton("start game");
-startButton.mouseClicked(start);
-startButton.size(120, 50);
-startButton.position(10, 415);
-startButton.style("font-family", "Press Start 2P");
-startButton.style("font-size", "18px");
+  createCanvas(1500,1500);
+  centerX = width / 2;
+  centerY = height / 2;
+  textSize(10);
+  fill(255);
+}
 
-let upButtonElem = createButton("W");
-upButtonElem.mouseClicked(upButton);
-upButtonElem.size(40, 30);
-upButtonElem.position(180, 415);
-upButtonElem.style("font-family", "Press Start 2P");
-upButtonElem.style("font-size", "14px");
 
-let downButtonElem = createButton("S");
-downButtonElem.mouseClicked(downButton);
-downButtonElem.size(40, 30);
-downButtonElem.position(180, 445);
-downButtonElem.style("font-family", "Press Start 2P");
-downButtonElem.style("font-size", "14px");
-
-let leftButtonElem = createButton("A");
-leftButtonElem.mouseClicked(leftButton);
-leftButtonElem.size(40, 30);
-leftButtonElem.position(140, 445);
-leftButtonElem.style("font-family", "Press Start 2P");
-leftButtonElem.style("font-size", "14px");
-
-let rightButtonElem = createButton("D");
-rightButtonElem.mouseClicked(rightButton);
-rightButtonElem.size(40, 30);
-rightButtonElem.position(220, 445);
-rightButtonElem.style("font-family", "Press Start 2P");
-rightButtonElem.style("font-size", "16px");
+function draw(){
   
-let restartButton = createButton("restart");
-restartButton.mouseClicked(restart);
-restartButton.size(90,45);
-restartButton.position(290, 420);
-restartButton.style("font-family", "Press Start 2P");
-restartButton.style("font-size", "11px");
+    background('rgb(0,0,0)');
+    noStroke();
+    fill ('yellow')
+    circle(centerX,centerY, sunDiameter);
+  
+    planets.forEach(planet =>{
+      planet.angle += planet.speed;
 
-}
+      var x = centerX + planet.r * cos(planet.angle);
+      var y = centerY + planet.r * sin(planet.angle);
 
-function start(){
-  // userStartAudio(); //backup 
-  loop(); //start draw
-  // song.loop();
-  // if (!song.isPlaying()){
-  // song.loop(); // overlap prevention :) 
-}
+      noFill();
+      stroke('gray');
+      circle(centerX,centerY,planet.r*2);
 
-}
+      noStroke();
+      fill(planet.colour);
+      circle(x,y,planet.size);
 
-function keyPressed() {
-  let k = key.toLowerCase();
-   if ((keyCode === RIGHT_ARROW || k === 'd') && directionIndex != 2) directionIndex = 0;
-    else if ((keyCode === LEFT_ARROW || k === 'a') && directionIndex != 0) directionIndex = 2;
-    else if ((keyCode === UP_ARROW || k === 'w' )&& directionIndex != 1) directionIndex = 3;
-    else if ((keyCode === DOWN_ARROW || k === 's' )&& directionIndex != 3) directionIndex = 1;
-}
-function rightButton() { if (directionIndex != 2) directionIndex = 0; }
-function leftButton() { if (directionIndex != 0) directionIndex = 2; }
-function upButton() { if (directionIndex != 1) directionIndex = 3; }
-function downButton() { if (directionIndex != 3) directionIndex = 1; }
-function plotFood() {
- 
-  let success = false;
-  while (!success) {
-    let attempts = 0; 
-    while (!success && attempts < 1000){
-      attempts++;  
-    }
-    foodX = round(random(5, 399));
-    foodX -= foodX % 10;
-    foodX += 5;
-    foodY = round(random(5, 399));
-    foodY -= foodY % 10;
-    foodY += 5;
-    for (let i = 0; i < len; i++) {
-      if (cX[i] == foodX && cY[i] == foodY) {
-        success = false;
-        break;
+      fill(255);
+      if (planet.name != 'Saturn') {
+      text(planet.name,x+15,y+15);
       }
-      if (i == len - 1) success = true;
-    }
-  }
-}
-function restart(){
- cX =[35];
- cY =[15];
- len = 1;
-  directionIndex = 0;
-  gameEnd = false;
-   plotFood();
-  // song.stop();
-  // song.loop();
-   loop();
-}
-function caterpillar() {
 
-  if (cX[0] == foodX && cY[0] == foodY) {
-    plotFood();
-    len += 1;
-    // foodEaten.play();
-  }
+             // The moon and Saturns rings
+      if (planet.name === 'Earth') {
+        moon.angle += moon.speed;
 
-  for (let i = len - 1; i > 0; i--) {
-    cX[i] = cX[i - 1];
-    cY[i] = cY[i - 1];
-  }
-   crossOver();
+        var moonX = x + moon.r * cos(moon.angle);
+        var moonY = y + moon.r * sin(moon.angle);
 
- fill("green");
-  for (let i = 0; i < len; i++) { 
-    circle(cX[i], cY[i], diameter);
-  }
-}
+        fill ('rgb(112,112,112)')
+        circle(moonX,moonY, moonDiameter)
+      }
+        if (planet.name === 'Saturn') {
+          push();
+          translate(x, y);
+          rotate(0.6);
+          
+          
 
-function crossOver() {
-    cX[0] += xDirectionArray[directionIndex] * 10;
-  cY[0] += yDirectionArray[directionIndex] * 10;
-if (cX[0] < 5 || cX[0] > 395 || cY[0] < 5 || cY[0] > 395) {
-    gameEnd = true;
-    // song.stop();
-  //hi score here
-    if ((len-1) > highScore){
-      highScore = (len- 1);
-    }
-    noLoop();
-    return;
-}
-  if (cX[0] > 5 && cX[0] < 395 && cY[0] > 5 && cY[0] < 395 && len > 1) {
-    for (let i = 1; i < len; i++) {
-      if (cX[0] == cX[i] && cY[0] == cY[i]) {
-        gameEnd = true;
-        // song.stop(); 
-        noLoop();
-    }
-   }
-  }
+          noFill();
+          stroke(200, 180, 120);
+          strokeWeight(2);
+
+          ellipse(0, 0, planet.size * 2.5, planet.size * 1);
+          ellipse(0, 0, planet.size * 3.5, planet.size * 1.4);
+          
+          pop();
+          text("Saturn",x+10,y+30);
+        }
+    noStroke();
+    fill(planet.colour);
+    circle(x,y,planet.size);
+      
+      });
 }
 
-function draw() {
-  // text("", width / 2, height / 2 - 50);
-  background("black");
-  textAlign (LEFT,BASELINE);
-  textFont(twopFont);
-  if (!gameEnd) {
-    caterpillar();
-  }
-  // caterpillar();
-  fill("red");
-  circle(foodX, foodY, 10);
-
-  fill("rgb(233,233,126)");
-  rect(0, 400, 400, 100);
-  textSize(15);
-  stroke("black");
-  fill("black");
-  text("score = " + (len - 1), 30, 499);
-  text("Highscore =" + highScore, 200,499)
- 
-  if (gameEnd) {
-    // len = 1
-    textSize(34);
-    fill("red");
-    stroke("black");
-    textAlign(CENTER, CENTER);
-    text("GAME OVER!", width / 2, height / 2 - 50);
-  }
-}
+           
